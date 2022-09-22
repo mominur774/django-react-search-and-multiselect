@@ -18,3 +18,7 @@ a {
 .hobby-list span:not(:last-child)::after {
   content: "-";
 }
+
+.deactive {
+  opacity: 0.50;
+}

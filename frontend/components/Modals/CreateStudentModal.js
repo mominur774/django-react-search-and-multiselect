@@ -1,23 +1,18 @@
 import React, { useState, useEffect } from "react";
 import Select from 'react-select'
 import useApiHelper from "../../api";
-import { makeEnumFriendly, enumList } from "../../enum";
-import { useRouter } from "next/router";
+import { makeEnumFriendly, getEnumList } from "../../enum";
 import Modal from 'react-bootstrap/Modal';
 
 const AddStudent = (props) => {
-  const [hobby, setHobby] = useState([]);
   const api = useApiHelper();
-
+  const [hobbies, setHobbies] = useState([])
 
   useEffect(() => {
     api.hobbyList().then(res => {
-      setHobby(makeEnumFriendly(res))
-    }).catch(error => {
-      console.log(error)
+      setHobbies(makeEnumFriendly(res))
     })
   }, [])
-
 
   return (
     <Modal
@@ -91,8 +86,8 @@ const AddStudent = (props) => {
                   const hValue = e.map(val => val.value)
                   props.setFormData({ ...props.formData, 'hobby': hValue })
                 }}
-                options={hobby}
-                isOptionDisabled={() => props?.formData?.hobby?.length > 2}
+                options={hobbies}
+                value={getEnumList(hobbies, props?.formData?.hobby)}
               />
             </div>
             <div className="col-lg-6">

@@ -1,4 +1,3 @@
-from turtle import st
 from rest_framework import serializers
 from myapp.models import Student, Hobby
 
@@ -10,6 +9,8 @@ class HobbySerializer(serializers.ModelSerializer):
 
 
 class StudentSerializer(serializers.ModelSerializer):
+    hobby_list = serializers.ReadOnlyField()
+
     class Meta:
         model = Student
         fields = '__all__'

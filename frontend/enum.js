@@ -6,10 +6,11 @@ export const makeEnumFriendly = (arr) => {
     return arr
 }
 
-export const enumList = (dataList, valueList) => {
-    dataList?.filter(data => {
-        valueList?.filter(value => {
-            if (value === data.id) return data.value
-        })
-    })
-}
+export const getEnumList = function (baseArr, arr) {
+    const data = baseArr.filter(el => {
+        return arr?.some(f => {
+            return f === el.value;
+        });
+    });
+    return data
+};

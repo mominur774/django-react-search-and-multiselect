@@ -5,11 +5,13 @@ import { ToastProvider } from 'react-toast-notifications';
 
 function MyApp({ Component, pageProps }) {
   return (
-    <Layout>
-      <ToastProvider>
-        <Component {...pageProps} />
-      </ToastProvider>
-    </Layout>
+    <>
+      <Layout>
+        <ToastProvider>
+          <Component {...pageProps} />
+        </ToastProvider>
+      </Layout>
+    </>
   )
 }
 
