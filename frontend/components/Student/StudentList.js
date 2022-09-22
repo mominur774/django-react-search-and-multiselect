@@ -193,10 +193,10 @@ const StudentList = () => {
                 </tr>
               </thead>
               <tbody>
-                {students?.results?.map(student => (
+                {students?.results?.map((student, index) => (
                   <React.Fragment key={student.id}>
                     <tr>
-                      <td>{student.id}</td>
+                      <td>{index + 1}</td>
                       <td>{student.name}</td>
                       <td>{student.email}</td>
                       <td>{student.address}</td>
@@ -244,6 +244,7 @@ const StudentList = () => {
       handleClose={handleClose}
       handleChange={handleChange}
       formData={formData}
+      setFormData={setFormData}
       handleSubmit={handleSubmit}
       edit={edit}
     />
