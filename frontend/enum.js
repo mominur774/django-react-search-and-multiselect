@@ -6,6 +6,10 @@ export const makeEnumFriendly = (arr) => {
     return arr
 }
 
+export const getEnumItem = function (arr, val) {
+    return arr?.find(({ value }) => value === val)
+};
+
 export const getEnumList = function (baseArr, arr) {
     const data = baseArr.filter(el => {
         return arr?.some(f => {
