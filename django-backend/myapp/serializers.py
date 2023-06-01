@@ -1,25 +1,34 @@
 from rest_framework import serializers
-from myapp.models import Student, Hobby
+from myapp.models import Category, Product, Brand
 
 
-class HobbySerializer(serializers.ModelSerializer):
+class CategorySerializer(serializers.ModelSerializer):
     class Meta:
-        model = Hobby
+        model = Category
         fields = '__all__'
 
-
-class StudentSerializer(serializers.ModelSerializer):
-    hobby_list = serializers.ReadOnlyField()
-
+class BrandSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Student
+        model = Brand
+        fields = '__all__'
+
+class ProductSerializer(serializers.ModelSerializer):
+    category_list = serializers.SerializerMethodField()
+    brand_name = serializers.SerializerMethodField()
+
+    def get_category_list(self, obj):
+        return [category.name for category in obj.categories.all()]
+
+    def get_brand_name(self, obj):
+        return obj.brand.name
+    class Meta:
+        model = Product
         fields = '__all__'
 
     def create(self, validated_data):
-        hobbies = validated_data.pop('hobby', []),
-        stu = Student.objects.create(
+        categories = validated_data.pop('categories', [])
+        product = Product.objects.create(
             ** validated_data
         )
-        for hobby in hobbies:
-            stu.hobby.set(hobby)
-        return stu
+        product.categories.set(categories)
+        return product

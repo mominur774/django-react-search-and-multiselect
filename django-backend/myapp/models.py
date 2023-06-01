@@ -3,30 +3,30 @@ from django.db import models
 # Create your models here.
 
 
-class Hobby(models.Model):
+class Category(models.Model):
     name = models.CharField(max_length=255)
 
     def __str__(self):
         return str(self.name)
 
     class Meta:
-        verbose_name = 'Hobby'
-        verbose_name_plural = 'Hobbies'
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categories'
 
-
-class Student(models.Model):
+class Brand(models.Model):
     name = models.CharField(max_length=255)
-    email = models.EmailField()
-    department = models.CharField(max_length=255, null=True, blank=True)
-    address = models.CharField(max_length=255)
-    hobby = models.ManyToManyField(Hobby)
+
+    def __str__(self):
+        return self.name
+
+
+class Product(models.Model):
+    name = models.CharField(max_length=255)
+    categories = models.ManyToManyField(Category)
+    brand = models.ForeignKey(Brand, on_delete=models.SET_NULL, null=True, blank=True)
+    price = models.DecimalField(max_digits=8, decimal_places=2)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return str(self.name)
 
-    @property
-    def hobby_list(self):
-        h = []
-        for hb in self.hobby.all():
-            h.append(hb.name)
-        return h
